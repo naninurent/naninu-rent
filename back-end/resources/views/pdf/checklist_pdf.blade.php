@@ -133,7 +133,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                     <tr>
                         <td>Nama Pelanggan</td>
                         <td>:</td>
-                        <td>{{$order->nama_pelanggan}}</td>
+                        <td>{{$order->nama}}</td>
                     </tr>
                     <tr>
                         <td>No Whatsapp</td>
@@ -156,7 +156,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
             <td>
                 <table class="table-child" style="padding-right: 0px;">
                     <tr>
-                        <td>No Invoice</td>
+                        <td>No Checklist</td>
                         <td>:</td>
                         <td>
                             {{$order->invoice}}
@@ -166,7 +166,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                         <td>Unit</td>
                         <td>:</td>
                         <td>
-                            {{$car->merk}} {{$car->type}}
+                            {{$order->merk}} {{$order->type}}
                         </td>
                     </tr>
                     <tr>

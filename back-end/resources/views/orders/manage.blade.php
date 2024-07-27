@@ -11,11 +11,11 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label for="dari_tanggal">Dari Tanggal</label>
-                        <input type="date" name="dari_tanggal" id="dari_tanggal" class="form-control">
+                        <input type="date" name="dari_tanggal" id="dari_tanggal" class="form-control" required>
                     </div>
                     <div class="col-md-3">
                         <label for="sampai_tanggal">Sampai Tanggal</label>
-                        <input type="date" name="sampai_tanggal" id="sampai_tanggal" class="form-control">
+                        <input type="date" name="sampai_tanggal" id="sampai_tanggal" class="form-control" required>
                     </div>
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-danger mt-4">Cetak PDF</button>

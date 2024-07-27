@@ -352,12 +352,12 @@ class OrderController extends Controller
     {
         $keyword = $request->input('keyword');
         if ($keyword) {
-            $orders = Confirm_order::rightJoin('orders', 'orders.id', '=', 'confirm_orders.order_id')
+            $orders = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
                 ->join('cars', 'cars.id', '=', 'orders.car_id')
-                ->select('confirm_orders.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
+                ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
                 ->where('merk', 'like', '%' . $keyword . '%')
                 ->orWhere('type', 'like', '%' . $keyword . '%')
-                ->orWhere('nama_pelanggan', 'like', '%' . $keyword . '%')
+                ->orWhere('nama', 'like', '%' . $keyword . '%')
                 ->orWhere('ktp', 'like', '%' . $keyword . '%')
                 ->orWhere('nopol', 'like', '%' . $keyword . '%')
                 ->orWhere('telp', 'like', '%' . $keyword . '%')
@@ -372,7 +372,7 @@ class OrderController extends Controller
             ];
             return view('orders.manage', $view_data);
         } else {
-            return redirect("/");
+            return redirect("manage_orders");
         }
     }
     public function cetak_transaksi(Request $request)
@@ -380,9 +380,9 @@ class OrderController extends Controller
         $tanggal1 = $request->input('dari_tanggal');
         $tanggal2 = $request->input('sampai_tanggal');
 
-        $orders = Confirm_order::rightJoin('orders', 'orders.id', '=', 'confirm_orders.order_id')
+        $orders = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
             ->join('cars', 'cars.id', '=', 'orders.car_id')
-            ->select('confirm_orders.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
+            ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
             ->whereBetween('orders.mulai_sewa', [$tanggal1, $tanggal2])->get();
         // dd($orders);
         $view_data = [
@@ -396,24 +396,15 @@ class OrderController extends Controller
 
     public function cetak_bukti_bayar($id)
     {
-        $order = Order::where('id', $id)->first();
-        // dd($order);
-        $car_id = $order->car_id;
-        $car = Car::where('id', $car_id)->first();
-        if ($order->status == "Dibayar") {
-            $confirm = Confirm_order::where('order_id', $id)->first();
-
+        $order = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
+            ->join('cars', 'cars.id', '=', 'orders.car_id')
+            ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
+            ->where('orders.status','=','Dibayar')->first();
+        
             $view_data = [
                 'order' => $order,
-                'confirm' => $confirm,
-                'car' => $car
             ];
-        } else {
-            $view_data = [
-                'order' => $order,
-                'car' => $car
-            ];
-        }
+        
 
 
         $dompdf = PDF::loadView('pdf.status_order_pdf', $view_data);
@@ -422,25 +413,14 @@ class OrderController extends Controller
     }
     public function cetak_kwitansi($id)
     {
-        $order = Order::where('id', $id)->first();
-        // dd($order);
-        $car_id = $order->car_id;
-        $car = Car::where('id', $car_id)->first();
-        if ($order->status == "Dibayar") {
-            $confirm = Confirm_order::where('order_id', $id)->first();
-
+        $order = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
+            ->join('cars', 'cars.id', '=', 'orders.car_id')
+            ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
+            ->where('orders.status','=','Dibayar')->first();
+        
             $view_data = [
                 'order' => $order,
-                'confirm' => $confirm,
-                'car' => $car
             ];
-        } else {
-            $view_data = [
-                'order' => $order,
-                'car' => $car
-            ];
-        }
-
 
         $dompdf = PDF::loadView('pdf.kwitansi_pdf', $view_data)->setPaper(array(0, 0, 659.4488, 450.225), 'letter');
         set_time_limit(300);
@@ -449,25 +429,14 @@ class OrderController extends Controller
 
     public function cetak_checklist($id)
     {
-        $order = Order::where('id', $id)->first();
-
-        // dd($order);
-        $car_id = $order->car_id;
-        $car = Car::where('id', $car_id)->first();
-        if ($order->status == "Dibayar") {
-            $confirm = Confirm_order::where('order_id', $id)->first();
-
+        $order = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
+            ->join('cars', 'cars.id', '=', 'orders.car_id')
+            ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
+            ->where('orders.status','=','Dibayar')->first();
+        
             $view_data = [
                 'order' => $order,
-                'confirm' => $confirm,
-                'car' => $car
             ];
-        } else {
-            $view_data = [
-                'order' => $order,
-                'car' => $car
-            ];
-        }
 
 
 

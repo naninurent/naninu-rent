@@ -1,10 +1,12 @@
 <?php
 
-$harga = $order->total_harga;
+$harga = $order->harga;
 $lama_sewa = $order->lama_sewa;
 $overtime = $order->overtime;
-$harga_overtime = (int) ($harga / $lama_sewa / 10) * $overtime;
-$total_harga = (int) $harga + $harga_overtime;
+$harga_sewa = $lama_sewa * $harga;
+$harga_overtime = (int) ($harga / 10) * $overtime;
+$total_harga = $order->total_harga;
+
 ?>
 
 <html>
@@ -126,7 +128,7 @@ $total_harga = (int) $harga + $harga_overtime;
         </tr>
         <tr>
             <td>
-                Nama : {{$order->nama_pelanggan}}
+                Nama : {{$order->nama}}
             </td>
             <td colspan="2">
                 <h5 class="title">KWITANSI</h5>
@@ -147,7 +149,7 @@ $total_harga = (int) $harga + $harga_overtime;
             <td colspan="2">MERK KENDARAAN</td>
 
             <td>
-                : {{$car->merk}} {{$car->type}}
+                : {{$order->merk}} {{$order->type}}
             </td>
             <td> </td>
         </tr>
@@ -197,8 +199,8 @@ $total_harga = (int) $harga + $harga_overtime;
             <td>6</td>
             <td colspan="2">HARGA SEWA</td>
 
-            <td>:</td>
-            <td>Rp. <span>{{number_format($order->total_harga, 0, ',','.')}},00</span>
+            <td>: {{$lama_sewa}} Hari X {{number_format($harga, 0, ',','.')}},00</td>
+            <td>Rp. <span>{{number_format($harga_sewa, 0, ',','.')}},00</span>
             </td>
         </tr>
         <tr>
@@ -234,7 +236,7 @@ $total_harga = (int) $harga + $harga_overtime;
         <tr>
             <td style="padding: 0px; padding-left:30px;">
                 <h5 style="text-align: center; padding-bottom: 65px;">PENYEWA</h5>
-                <h5 style="text-align: center;">{{$order->nama_pelanggan}}</h5>
+                <h5 style="text-align: center;">{{$order->nama}}</h5>
             </td>
             <td style="padding-left: 480px;">
                 <h5 style="text-align: center;">NANINU RENT</h5>
