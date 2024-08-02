@@ -22,20 +22,19 @@
             border-bottom: 1px solid black;
             border-left: 1px solid black;
         }
-        <style>
         .container {
             border-bottom: 1px dashed black;
         }
-
+        
+        .table-child {
+            margin-top: -20px;
+        }
         .table-head {
             width: 100%;
             border: none;
             margin-top: -25px;
         }
 
-        .table-child {
-            margin-top: -20px;
-        }
 
         .table-head-3 {
             margin-top: -15px;
@@ -84,6 +83,7 @@
         .judul-table p {
             font-size: 14px;
             padding-top: 6px;
+            line-height: 1;
         }
 
         .judul-table {
@@ -94,9 +94,6 @@
         p {
             line-height: 1px;
             font-size: 0.7rem;
-        }
-        .container table td:first-child{
-            border-left: none;
         }
     </style>
 </head>
@@ -151,7 +148,7 @@
                     <td>{{$order->invoice}}</td>
                     <td>{{$order->nopol}}</td>
                     <td>{{$order->merk}} {{$order->type}}</td>
-                    <td>{{$order->nama_pelanggan}}</td>
+                    <td>{{$order->nama}}</td>
                     <td>{{$order->ktp}}</td>
                     <td>{{$order->telp}}</td>
                     <td>{{$order->layanan}}</td>

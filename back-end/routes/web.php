@@ -51,6 +51,7 @@ Route::patch('order/{id}', [OrderController::class, 'update']);
 Route::delete('order/{id}', [OrderController::class, 'destroy']);
 Route::post('search-order', [OrderController::class, 'search_order']);
 Route::get('orders/search', [OrderController::class, 'orders_search']);
+Route::get('orders/create_invoice/{id}',[OrderController::class,'create_invoice']);
 
 // customer
 Route::get('manage_customers', [CustomerController::class,'index']);

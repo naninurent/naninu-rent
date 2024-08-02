@@ -133,58 +133,6 @@ class OrderController extends Controller
             ];
             return view('customers.register', $view_data);
         }
-        // dd($tgl_sewa);
-        // $mulai_sewa = $request->input('mulai_sewa'->format('d-m-Y'));
-        
-        // $data = [
-        //     'car_id' => $car->id,
-        //     'invoice' => $invoice,
-        //     'nama_pelanggan' => $nama_pelanggan,
-        //     'ktp' => $ktp,
-        //     'catatan' => $catatan,
-        //     'layanan' => $layanan,
-        //     'tujuan' => $tujuan,
-        //     'mulai_sewa' => $tgl_sewa,
-        //     'selesai_sewa' => $selesai_sewa,
-        //     'lama_sewa' => $lama_sewa,
-        //     'total_harga' => $total_harga
-        // ];
-
-        // dd($data);
-
-        // // Set your Merchant Server Key
-        // \Midtrans\Config::$serverKey = config('midtrans.serverKey');
-        // // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        // \Midtrans\Config::$isProduction = false;
-        // // Set sanitization on (default)
-        // \Midtrans\Config::$isSanitized = true;
-        // // Set 3DS transaction for credit card to true
-        // \Midtrans\Config::$is3ds = true;
-
-        // $params = array(
-        //     'transaction_details' => array(
-        //         'order_id' => $invoice,
-        //         'gross_amount' => $total_harga,
-        //     ),
-        //     'customer_details' => array(
-        //         'nama' => $nama_pelanggan,
-        //         'no_ktp' => $ktp,
-        //     ),
-        // );
-
-        // $snapToken = \Midtrans\Snap::getSnapToken($params);
-
-        // $data += ["snap_token" => $snapToken];
-
-        // // dd($data);
-
-        // $order = Order::create($data);
-        // // dd($order);
-        // $this->notif_order($order, $car);
-
-
-        // return redirect("confirm_order/{$invoice}");
-        // 
     }
     
 
@@ -207,28 +155,7 @@ class OrderController extends Controller
 
     public function store_confirm_order($id)
     {
-        // $order = Order::where('id', $id)->first();
-        // $order_id = $order->id;
-
-        // $bayar = $request->input('bayar');
-        // $keterangan = $request->input('keterangan');
-
-        // if ($request->hasFile('bukti_bayar')) {
-        //     $request->file('bukti_bayar')->move('images/confirm_order/', $order->invoice . ".jpg");
-        //     $bukti_bayar = $order->invoice . ".jpg";
-        // }
-
-
-
-        // Confirm_order::create([
-        //     'order_id' => $order_id,
-        //     'bayar' => $bayar,
-        //     'bukti_bayar' => $bukti_bayar,
-        //     'keterangan' => $keterangan,
-        //     'created_at' => date('Y-m-d H:i:s'),
-        //     'updated_at' => date('Y-m-d H:i:s')
-        // ]);
-
+        
         Order::where('id', $id)
             ->update([
                 'status' => 'Dibayar'
@@ -375,6 +302,26 @@ class OrderController extends Controller
             return redirect("manage_orders");
         }
     }
+
+    public function create_invoice(Request $request,$id){
+        $order = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
+            ->join('cars', 'cars.id', '=', 'orders.car_id')
+            ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
+            ->where('orders.id','=',$id)->first();
+
+            $view_data = [
+                'order'=>$order                
+            ];
+        if($order->layanan == 'Mobil Saja'){
+        
+            $dompdf = PDF::loadView('pdf.invoice_pdf', $view_data)->setPaper('a4','potrait');
+            set_time_limit(300);
+            return $dompdf->stream('orders.pdf');
+
+        }
+        
+    }
+
     public function cetak_transaksi(Request $request)
     {
         $tanggal1 = $request->input('dari_tanggal');

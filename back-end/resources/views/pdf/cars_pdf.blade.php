@@ -10,6 +10,9 @@
             text-align: center;
             padding-left: 2rem;
         }
+        .container h5 {
+            line-height: 0;
+        }
 
         table {
             text-align: center;
@@ -22,13 +25,62 @@
             border-bottom: 1px solid black;
             border-left: 1px solid black;
         }
+        .table-head {
+            width: 100%;
+            border: none;
+            margin-top: -25px;
+        }
+
+
+        .table-head-3 {
+            margin-top: -15px;
+            margin-bottom: -10px;
+        }
+        .table-head td, .table-head tr{
+            border: none;
+        }
+        .table-head p, .table-head h5 {
+            font-size: 1rem;
+            line-height: 0;
+        }
+
+        .rental-info {
+            text-align: right;
+        }
+
+        td.rental-info {
+            padding-top: -200px;
+        }
+        td.rental-info h5 {
+            line-height: 0px;
+        }
     </style>
 </head>
 
 <body>
-
+<table class="table-head">
+        <tr>
+            <td>
+                <img src="{{public_path("images/logo.png")}}" alt="" width="200px" height="90px">
+            </td>
+            <td colspan="3">
+                <div class="rental-info">
+                    <h5>NANINU RENT</h5>
+                    <!-- <small>Jakarta</small> -->
+                    <p>Jln. Mampang Prapatan V No.70 Rt009/Rw006, Jakarta Selatan, 12790</p>
+                    <p>Phone : 021-79182997, 0858-8275-9455, 0899-5395-345</p>
+                    <p>E-Mail : naninurent@gmail.com</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="rental-info judul-table">
+                <p style="text-align: center; padding-left:30px;"><span class="title" style="text-align: center; font-size:2rem;">Data Mobil</span>
+                </p>
+            </td>
+        </tr>
+    </table>
     <div class="container">
-        <h1>Data Mobil</h1>
         <h5 style="text-align: right; padding-right:50px;">Jakarta : <?php echo (new \DateTime())->format('d/m/Y'); ?></h5>
         <table class="w-100">
             <thead>
@@ -51,7 +103,7 @@
                 <tr>
                     <td>{{$number}}</td>
                     <td>
-                        <img src="{{public_path("images/$car->image")}}" alt="naninu_picture" width="70px">
+                        <img src="{{public_path("images/cars/$car->image")}}" alt="naninu_picture" width="70px">
                     </td>
                     <td>{{$car->merk}}</td>
                     <td>{{$car->type}}</td>
