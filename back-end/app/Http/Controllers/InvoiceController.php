@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Invoice;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -14,16 +18,40 @@ class InvoiceController extends Controller
     public function index()
     {
         //
+        $orders = Customer::rightJoin('orders','orders.customer_id','=','customers.id')
+        ->join('cars','cars.id','=','orders.car_id')
+        ->join('invoices','invoices.no_invoice','=','orders.invoice')
+        ->select('customers.*','orders.*','invoices.*','cars.merk','cars.type','cars.harga')->get();
+    
+        $view_data = [
+            'orders'=>$orders
+        ];
+
+        // dd($view_data);
+    
+
+        return view('invoice.index',$view_data);
     }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $order = Customer::rightJoin('orders','orders.customer_id','=','customers.id')
+        ->join('cars','cars.id','=','orders.car_id')
+        ->select('customers.*','orders.*','cars.merk','cars.type','cars.harga')
+        ->where('orders.id','=',$id)->first();
+
+        $view_data=[
+            'order'=>$order,
+        ];
+
+        return view('invoice.create', $view_data);
     }
 
     /**
@@ -35,6 +63,47 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         //
+        $invoice = $request->input('invoice');
+
+        $order = Order::where('invoice','=',$invoice)->first();
+
+        $tanggal = $request->input('tanggal');
+        $user = $request->input('user');
+        $driver = $request->input('driver');
+        $uang_makan = $request->input('uang_makan');
+        $penginapan = $request->input('penginapan');
+        $bbm = $request->input('bbm');
+        $tol = $request->input('tol');
+        $parkir = $request->input('parkir');
+        $steam = $request->input('steam');
+        $nitrogen = $request->input('nitrogen');
+        $total = $request->input('total_invoice');
+
+        if($nitrogen == null){
+            $nitrogen = 0;
+        }
+
+        $data = [
+            'no_invoice'=> $invoice,
+            'driver' => $driver,
+            'user' => $user,
+            'tanggal' => $tanggal,
+            'uang_makan' => $uang_makan,
+            'penginapan'=>$penginapan,
+            'bbm' => $bbm,
+            'tol' => $tol,
+            'parkir' => $parkir,
+            'steam'=>$steam,
+            'nitrogen'=>$nitrogen,
+            'harga_invoice'=>$total
+        ];
+
+
+
+        // Nitrogen Error tidak boleh NUll
+        Invoice::create($data);
+
+        return redirect("invoices");
     }
 
     /**
@@ -57,6 +126,20 @@ class InvoiceController extends Controller
     public function edit($id)
     {
         //
+        $order = Customer::rightJoin('orders','orders.customer_id','=','customers.id')
+        ->join('cars','cars.id','=','orders.car_id')
+        ->join('invoices','invoices.no_invoice','=','orders.invoice')
+        ->select('customers.*','orders.*','invoices.*','cars.merk','cars.type','cars.harga')
+        ->where('orders.invoice', '=', $id)->first();
+    
+        $view_data = [
+            'order'=>$order
+        ];
+
+        // dd($view_data);
+    
+
+        return view('invoice.show',$view_data);
     }
 
     /**
@@ -80,5 +163,25 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function cetak(Request $request,$id){
+        $order = Customer::rightJoin('orders','orders.customer_id','=','customers.id')
+        ->join('cars','cars.id','=','orders.car_id')
+        ->join('invoices','invoices.no_invoice','=','orders.invoice')
+        ->select('customers.*','orders.*','invoices.*','cars.merk','cars.type','cars.harga')
+        ->where('orders.invoice', '=', $id)->first();
+    
+        $view_data = [
+            'order'=>$order
+        ];
+        if($order->layanan == 'Mobil Saja'){
+        
+            $dompdf = PDF::loadView('pdf.invoice_pdf', $view_data)->setPaper('a4','potrait');
+            set_time_limit(300);
+            return $dompdf->stream('orders.pdf');
+
+        }
+        
     }
 }

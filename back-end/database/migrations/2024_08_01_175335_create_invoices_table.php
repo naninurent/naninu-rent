@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->string('no_invoice');
+            $table->string('driver');
+            $table->string('user');
+            $table->string('tanggal');
             $table->integer('uang_makan')->default(0);
             $table->integer('penginapan')->default(0);
             $table->integer('bbm')->default(0);

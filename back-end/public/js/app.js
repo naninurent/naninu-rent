@@ -242,3 +242,46 @@ function copyRekening() {
     document.querySelector("span.btn-rekening").innerText = "Copied";
     // invoice.innerText = "Copied";
 }
+
+
+function hitungTotal(){
+    let harga = parseInt(document.querySelector('#hargasewa').value) * parseInt(document.querySelector('.lama_sewa').value) ;
+    let uangMakan = parseInt(document.querySelector('#uang_makan').value);
+    let penginapan = parseInt(document.querySelector('#penginapan').value);
+    let bbm = parseInt(document.querySelector('#bbm').value);
+    let tol = parseInt(document.querySelector('#tol').value);
+    let parkir = parseInt(document.querySelector('#parkir').value);
+    let steam = parseInt(document.querySelector('#steam').value);
+    let nitrogen = parseInt(document.querySelector('#nitrogen').value);
+    if(!uangMakan){
+        uangMakan = 0;
+    }
+    if(!penginapan){
+        penginapan = 0;
+    }
+    if(!bbm){
+        bbm = 0;
+    }
+    if(!tol){
+        tol = 0;
+    }
+    if(!parkir){
+        parkir = 0;
+    }
+    if(!steam){
+        steam = 0;
+    }
+    if(!nitrogen){
+        nitrogen = 0;
+    }
+
+    const totalHargaInvoice = document.querySelector('#total_invoice');
+
+
+    const totalInvoice = parseInt(harga + uangMakan + penginapan + bbm + tol + parkir + steam + nitrogen);
+
+    document.querySelector('.simpan').removeAttribute("disabled");
+    totalHargaInvoice.setAttribute('value',totalInvoice);
+    console.log(totalHargaInvoice);
+
+}

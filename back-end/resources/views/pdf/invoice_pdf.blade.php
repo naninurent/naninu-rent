@@ -201,7 +201,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>Rp. {{number_format($order->penginapan, 0, ',','.') . ".00"}}</td>
             </tr>
             <tr>
                 <td>4</td>
@@ -211,7 +211,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>Rp. {{number_format($order->bbm, 0, ',','.') . ".00"}}</td>
             </tr>
             <tr>
                 <td>5</td>
@@ -221,7 +221,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>Rp. {{number_format($order->tol, 0, ',','.') . ".00"}}</td>
             </tr>
             <tr>
                 <td>6</td>
@@ -231,7 +231,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>Rp. {{number_format($order->parkir, 0, ',','.') . ".00"}}</td>
             </tr>
             <tr>
                 <td>7</td>
@@ -241,7 +241,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>Rp. {{number_format($order->steam, 0, ',','.') . ".00"}}</td>
             </tr>
             <tr>
                 <td>8</td>
@@ -271,7 +271,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>Rp. {{number_format($order->nitrogen, 0, ',','.') . ".00"}}</td>
             </tr>
             <tr>
                 <td colspan="7" style="text-align: right; padding-right:10px;">Total</td>

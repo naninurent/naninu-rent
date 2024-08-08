@@ -23,7 +23,7 @@
                 Bayar ?
             </button></a>
         @endif
-        <a href="{{url("orders/create_invoice/$order->id")}}" class="btn btn-secondary">Buat Invoice</a>
+        <a href="{{url("create_invoice/$order->id")}}" class="btn btn-secondary">Buat Invoice</a>
     </div>
     <form action="{{url('order/$order->id')}}" method="POST" enctype="multipart/form-data">
         @method('PATCH')

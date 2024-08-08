@@ -68,47 +68,47 @@
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" >
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{$order->tanggal}}" >
                 </div>
                 <div class="form-group mb-3">
                     <label for="user" class="form-label">Nama User</label>
-                    <input type="text" name="user" id="user" class="form-control" >
+                    <input type="text" name="user" id="user" class="form-control" value="{{$order->user}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="driver" class="form-label">Nama Driver</label>
-                    <input type="text" name="driver" id="driver" class="form-control" >
+                    <input type="text" name="driver" id="driver" class="form-control" value="{{$order->driver}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="uang_makan" class="form-label">Uang Makan</label>
-                    <input type="number" name="uang_makan" id="uang_makan" class="form-control">
+                    <input type="number" name="uang_makan" id="uang_makan" class="form-control" value="{{$order->uang_makan}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="penginapan" class="form-label">Penginapan</label>
-                    <input type="number" name="penginapan" id="penginapan" class="form-control">
+                    <input type="number" name="penginapan" id="penginapan" class="form-control" value="{{$order->penginapan}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="bbm" class="form-label">BBM</label>
-                    <input type="number" name="bbm" id="bbm" class="form-control">
+                    <input type="number" name="bbm" id="bbm" class="form-control" value="{{$order->bbm}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="tol" class="form-label">TOL</label>
-                    <input type="number" name="tol" id="tol" class="form-control">
+                    <input type="number" name="tol" id="tol" class="form-control" value="{{$order->tol}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="parkir" class="form-label">Parkir</label>
-                    <input type="number" name="parkir" id="parkir" class="form-control">
+                    <input type="number" name="parkir" id="parkir" class="form-control" value="{{$order->parkir}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="steam" class="form-label">Cuci Steam</label>
-                    <input type="number" name="steam" id="steam" class="form-control">
+                    <input type="number" name="steam" id="steam" class="form-control" value="{{$order->steam}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="nitrogen" class="form-label">Nitrogen</label>
-                    <input type="number" name="nitrogen" id="nitrogen" class="form-control">
+                    <input type="number" name="nitrogen" id="nitrogen" class="form-control" value="{{$order->nitrogen}}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="total_invoice" class="form-label">Total Harga Invoice</label>
-                    <input type="number" name="total_invoice" id="total_invoice" class="form-control">
+                    <input type="number" name="total_invoice" id="total_invoice" class="form-control" value="{{$order->harga_invoice}}">
                 </div>
 
                 <div class="form-group mb-3">
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="form-group my-3">
-                    <button type="submit" name="tambah" class="btn btn-success w-100 simpan">Simpan</button>
+                    <button type="submit" name="tambah" class="btn btn-success w-100 simpan" disabled>Simpan</button>
                 </div>
             </div>
         </div>

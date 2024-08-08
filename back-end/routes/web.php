@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
+use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
@@ -51,7 +53,6 @@ Route::patch('order/{id}', [OrderController::class, 'update']);
 Route::delete('order/{id}', [OrderController::class, 'destroy']);
 Route::post('search-order', [OrderController::class, 'search_order']);
 Route::get('orders/search', [OrderController::class, 'orders_search']);
-Route::get('orders/create_invoice/{id}',[OrderController::class,'create_invoice']);
 
 // customer
 Route::get('manage_customers', [CustomerController::class,'index']);
@@ -61,6 +62,13 @@ Route::get('customer/{id}',[CustomerController::class,'show']);
 Route::get('customer/{id}/edit', [CustomerController::class,'edit']);
 Route::patch('customer/{id}',[CustomerController::class,'update']);
 Route::post('registCustomer',[CustomerController::class,'register']);
+
+// invoice
+Route::get('invoices',[InvoiceController::class,'index']);
+Route::get('invoice/{id}',[InvoiceController::class,'edit']);
+Route::get('create_invoice/{id}',[InvoiceController::class,'create']);
+Route::get('print_invoice/{id}',[InvoiceController::class,'cetak']);
+Route::post('create_invoice',[InvoiceController::class,'store']);
 
 
 // Route::post('order',)
