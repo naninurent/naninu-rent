@@ -5,6 +5,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ServicesController;
 use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
@@ -36,10 +37,10 @@ Route::get('cars/create', [CarController::class, 'create']);
 Route::post('cars', [CarController::class, 'store']);
 Route::get('cars/{id}/edit', [CarController::class, 'edit']);
 Route::patch('cars/{id}', [CarController::class, 'update']);
-Route::delete('cars/{id}', [CarController::class, 'destroy']);
 Route::get('manage_cars', [CarController::class, 'manage_cars']);
 Route::get('cars/search', [CarController::class, 'search_cars']);
 Route::get('cars-collection/search', [CarController::class, 'search_cars_collection']);
+Route::delete('cars/{id}', [CarController::class, 'destroy']);
 
 //Order Routes
 Route::get('order/{id}', [OrderController::class, 'create']);
@@ -50,9 +51,9 @@ Route::get('status_order/{id}', [OrderController::class, 'status_order'])->name(
 Route::get('manage_orders', [OrderController::class, 'manage_orders']);
 Route::get('order/{id}/edit', [OrderController::class, 'edit']);
 Route::patch('order/{id}', [OrderController::class, 'update']);
-Route::delete('order/{id}', [OrderController::class, 'destroy']);
 Route::post('search-order', [OrderController::class, 'search_order']);
 Route::get('orders/search', [OrderController::class, 'orders_search']);
+Route::delete('order/{id}', [OrderController::class, 'destroy']);
 
 // customer
 Route::get('manage_customers', [CustomerController::class,'index']);
@@ -62,16 +63,25 @@ Route::get('customer/{id}',[CustomerController::class,'show']);
 Route::get('customer/{id}/edit', [CustomerController::class,'edit']);
 Route::patch('customer/{id}',[CustomerController::class,'update']);
 Route::post('registCustomer',[CustomerController::class,'register']);
+Route::delete('customer/{id}',[CustomerController::class,'destroy']);
 
 // invoice
 Route::get('invoices',[InvoiceController::class,'index']);
-Route::get('invoice/{id}',[InvoiceController::class,'edit']);
 Route::get('create_invoice/{id}',[InvoiceController::class,'create']);
+Route::get('invoice/{id}/edit',[InvoiceController::class,'edit']);
+Route::patch('invoice/{id}',[InvoiceController::class,'update']);
 Route::get('print_invoice/{id}',[InvoiceController::class,'cetak']);
 Route::post('create_invoice',[InvoiceController::class,'store']);
+Route::delete('invoice/{id}',[InvoiceController::class,'destroy']);
 
+// services
 
-// Route::post('order',)
+Route::get('services',[ServicesController::class,'index']);
+Route::get('services/create',[ServicesController::class,'create']);
+Route::post('services', [ServicesController::class,'store']);
+Route::get('service/{id}/edit', [ServicesController::class,'edit']);
+Route::patch('service/{id}', [ServicesController::class,'update']);
+Route::delete('service/{id}', [ServicesController::class, 'destroy']);
 
 // Cetak PDF
 Route::get('cars/cetak_data_mobil', [CarController::class, 'cetak_data_mobil']);

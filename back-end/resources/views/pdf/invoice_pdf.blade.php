@@ -122,7 +122,7 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                         <tr>
                             <td>User</td>
                             <td>:</td>
-                            <td>{{$order->nama}}</td>
+                            <td>{{$order->user}}</td>
                         </tr>
                         <tr>
                             <td>Tujuan</td>
@@ -191,7 +191,11 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>
+                    @if($order->uang_makan!=0)
+                        Rp. {{ number_format($order->uang_makan, 0, ',' ,'.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>3</td>
@@ -201,7 +205,13 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Rp. {{number_format($order->penginapan, 0, ',','.') . ".00"}}</td>
+                <td>
+                    @if($order->penginapan==0)
+                    
+                    @else
+                        Rp. {{number_format($order->penginapan, 0, ',','.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>4</td>
@@ -211,7 +221,11 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Rp. {{number_format($order->bbm, 0, ',','.') . ".00"}}</td>
+                <td>
+                    @if($order->bbm!=0)
+                    Rp. {{number_format($order->bbm, 0, ',','.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>5</td>
@@ -221,7 +235,11 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Rp. {{number_format($order->tol, 0, ',','.') . ".00"}}</td>
+                <td>
+                    @if($order->tol!=0)
+                    Rp. {{number_format($order->tol, 0, ',','.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>6</td>
@@ -231,7 +249,11 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Rp. {{number_format($order->parkir, 0, ',','.') . ".00"}}</td>
+                <td>
+                    @if($order->parkir!=0)
+                        Rp. {{number_format($order->parkir, 0, ',','.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>7</td>
@@ -241,7 +263,11 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Rp. {{number_format($order->steam, 0, ',','.') . ".00"}}</td>
+                <td>
+                    @if($order->steam!=0)
+                    Rp. {{number_format($order->steam, 0, ',','.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>8</td>
@@ -249,17 +275,36 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{{$order->overtime}} Jam</td>
+
+                @if($order->overtime == 0)
+                <td>
+                    {{" "}}
+                </td>
+                @else
+                <td>
+                    {{$order->overtime}} Jam
+                </td>
+                    @endif
                 <td style="text-align: right;">
                     <?php
-                        $harga_overtime = $order->harga / 10 ;
-                        echo "Rp. " . number_format($harga_overtime, 0, ',','.') . ".00";
+                        if($order->overtime == 0){
+                            $harga_overtime = " ";
+                            echo $harga_overtime;
+                        }else{
+                            $harga_overtime = $order->harga / 10 ;
+                            echo "Rp. " . number_format($harga_overtime, 0, ',','.') . ".00";
+                        }
                     ?>
                 </td>
                 <td style="text-align: right;">
                     <?php
+                    if($order->overtime == 0){
+                        $total_harga_ovt = " ";
+                        echo $total_harga_ovt;
+                    }else{
                         $total_harga_ovt = $order->overtime * $harga_overtime;
                         echo "Rp. " . number_format($total_harga_ovt, 0, ',','.') . ".00";
+                    }
                     ?>
                 </td>
             </tr>
@@ -271,7 +316,11 @@ $dateName = Carbon::now()->locale('id')->isoFormat('LL');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Rp. {{number_format($order->nitrogen, 0, ',','.') . ".00"}}</td>
+                <td>
+                    @if($order->nitrogen!=0)
+                    Rp. {{number_format($order->nitrogen, 0, ',','.') . ".00"}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td colspan="7" style="text-align: right; padding-right:10px;">Total</td>

@@ -22,7 +22,7 @@ class CarController extends Controller
     public function index()
     {
         //
-        $cars = Car::simplePaginate(8);
+        $cars = Car::where('active',1)->simplePaginate(8);
 
         $view_data = [
             'cars' => $cars,
@@ -55,13 +55,19 @@ class CarController extends Controller
         $harga = $request->input('harga');
         // $image = 
 
+        
         $request->validate([
             'image'=>'image|mimes:png,jpg,jpeg,svg',
         ]);
 
+        
+        
         $image = $type .'-'. $tahun . '.' . $request->image->extension();
-
-        $request->image->move(public_path('images/cars/'),$image);
+        
+        if ($request->hasFile('image')) {
+                $request->file('image')->move('images/cars/', $image);
+            }
+        // $request->image->move(public_path('images/cars/'),$image);
 
 
         Car::create([
@@ -168,6 +174,7 @@ class CarController extends Controller
     public function destroy($id)
     {
         //
+        Car::where('id',$id)->update(['active'=>0]);
         Car::where('id', $id)->delete();
 
         return redirect('manage_cars');
@@ -178,7 +185,7 @@ class CarController extends Controller
         // if (!Auth::check()) {
         //     return redirect('login');
         // }
-        $cars = Car::where('isActive', true)->paginate(20);
+        $cars = Car::where('active',1)->paginate(20);
 
         $view_data = [
             'cars' => $cars,

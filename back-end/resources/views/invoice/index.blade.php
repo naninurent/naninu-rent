@@ -38,7 +38,7 @@
             <tr>
                 <td>{{$number}}</td>
                 <td>
-                <a href="{{url("invoice/$order->invoice")}}" class="text-success">
+                <a href="{{url("invoice/$order->invoice/edit")}}" class="text-success">
                     {{$order->invoice}}
                 </a>
             </td>
@@ -52,7 +52,7 @@
                 <td>{{$order->tujuan}}</td>
                 <td>{{$order->mulai_sewa}}</td>
                 <td>{{$order->selesai_sewa}}</td>
-                <td>{{$order->total_harga}}</td>
+                <td>Rp. {{number_format($order->harga_invoice, 0,',','.')}}</td>
                 
                 <td class="d-flex">
                     <a href="{{url("print_invoice/$order->invoice")}}" class="text-decoration-none">

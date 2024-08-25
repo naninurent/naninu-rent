@@ -199,7 +199,7 @@ class OrderController extends Controller
         $orders = Customer::rightJoin('orders', 'orders.customer_id', '=', 'customers.id')
             ->join('cars', 'cars.id', '=', 'orders.car_id')
             ->select('customers.*', 'orders.*', 'cars.merk', 'cars.type', 'cars.harga')
-            ->paginate(20);
+            ->where('orders.active','=',1)->paginate(20);
 
         $view_data = [
             'orders' => $orders
@@ -261,6 +261,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+        Order::where('id', $id)->update(['active'=>0]);
         Order::where('id', $id)->delete();
 
         return redirect('manage_orders');

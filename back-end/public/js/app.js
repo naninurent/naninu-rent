@@ -113,7 +113,7 @@ function hitung_lama_sewa() {
     // console.log(valueMulai);
     // console.log(valueSelesai);
     // console.log(inputLamaSewa.value);
-    // hitung_total_harga();
+    hitung_total_harga();
     hitung_harga_edit();
 }
 

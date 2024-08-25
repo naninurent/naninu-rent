@@ -17,7 +17,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        $customers = Customer::paginate(20);
+        $customers = Customer::where('active',1)->paginate(20);
 
         $view_data = [
             'customers'=> $customers
@@ -232,5 +232,9 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
+        Customer::where('id',$id)->update(['active'=>0]);
+        Customer::where('id',$id)->delete();
+
+        return redirect('manage_customers');
     }
 }

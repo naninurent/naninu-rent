@@ -199,7 +199,7 @@ $total_harga = $order->total_harga;
             <td>6</td>
             <td colspan="2">HARGA SEWA</td>
 
-            <td>: {{$lama_sewa}} Hari X {{number_format($harga, 0, ',','.')}},00</td>
+            <td>: {{$lama_sewa}} Hari X {{number_format($harga, 0, ',','.')}}.00</td>
             <td>Rp. <span>{{number_format($harga_sewa, 0, ',','.')}},00</span>
             </td>
         </tr>
@@ -215,7 +215,7 @@ $total_harga = $order->total_harga;
                 @endif
             </td>
             @if($overtime!=0)
-            <td class="overtime">Rp. <span>{{number_format($harga_overtime, 0, ',','.')}},00</span></td>
+            <td class="overtime">Rp. <span>{{number_format($harga_overtime, 0, ',','.')}}.00</span></td>
             @else
             <td class="overtime">Rp. </td>
             @endif

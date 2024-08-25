@@ -21,7 +21,7 @@ class InvoiceController extends Controller
         $orders = Customer::rightJoin('orders','orders.customer_id','=','customers.id')
         ->join('cars','cars.id','=','orders.car_id')
         ->join('invoices','invoices.no_invoice','=','orders.invoice')
-        ->select('customers.*','orders.*','invoices.*','cars.merk','cars.type','cars.harga')->get();
+        ->select('customers.*','orders.*','invoices.*','cars.merk','cars.type','cars.harga')->where('invoices.active',1)->get();
     
         $view_data = [
             'orders'=>$orders
@@ -47,11 +47,17 @@ class InvoiceController extends Controller
         ->select('customers.*','orders.*','cars.merk','cars.type','cars.harga')
         ->where('orders.id','=',$id)->first();
 
-        $view_data=[
-            'order'=>$order,
-        ];
+        
+        if(Invoice::where('no_invoice','=',$order->invoice)->first()){
+            return redirect('invoices');
+        }else{
+            $view_data=[
+                'order'=>$order,
+            ];
+            return view('invoice.create', $view_data);
+        }
 
-        return view('invoice.create', $view_data);
+
     }
 
     /**
@@ -79,6 +85,30 @@ class InvoiceController extends Controller
         $nitrogen = $request->input('nitrogen');
         $total = $request->input('total_invoice');
 
+        if($user == null){
+            $user = "-";
+        }
+        if($driver == null){
+            $driver = "-";
+        }
+        if($uang_makan == null){
+            $uang_makan = 0;
+        }
+        if($penginapan == null){
+            $penginapan = 0;
+        }
+        if($bbm == null){
+            $bbm = 0;
+        }
+        if($tol == null){
+            $tol = 0;
+        }
+        if($parkir == null){
+            $parkir = 0;
+        }
+        if($steam == null){
+            $steam = 0;
+        }
         if($nitrogen == null){
             $nitrogen = 0;
         }
@@ -152,6 +182,66 @@ class InvoiceController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $invoice = $request->input('invoice');
+
+        $order = Order::where('invoice','=',$invoice)->first();
+
+        $tanggal = $request->input('tanggal');
+        $user = $request->input('user');
+        $driver = $request->input('driver');
+        $uang_makan = $request->input('uang_makan');
+        $penginapan = $request->input('penginapan');
+        $bbm = $request->input('bbm');
+        $tol = $request->input('tol');
+        $parkir = $request->input('parkir');
+        $steam = $request->input('steam');
+        $nitrogen = $request->input('nitrogen');
+        $total = $request->input('total_invoice');
+
+        if($user == null){
+            $user = "-";
+        }
+        if($driver == null){
+            $driver = "-";
+        }
+        if($uang_makan == null){
+            $uang_makan = 0;
+        }
+        if($penginapan == null){
+            $penginapan = 0;
+        }
+        if($bbm == null){
+            $bbm = 0;
+        }
+        if($tol == null){
+            $tol = 0;
+        }
+        if($parkir == null){
+            $parkir = 0;
+        }
+        if($steam == null){
+            $steam = 0;
+        }
+        if($nitrogen == null){
+            $nitrogen = 0;
+        }
+
+        Invoice::where('no_invoice','=',$id)->update([
+            'no_invoice'=> $invoice,
+            'driver' => $driver,
+            'user' => $user,
+            'tanggal' => $tanggal,
+            'uang_makan' => $uang_makan,
+            'penginapan'=>$penginapan,
+            'bbm' => $bbm,
+            'tol' => $tol,
+            'parkir' => $parkir,
+            'steam'=>$steam,
+            'nitrogen'=>$nitrogen,
+            'harga_invoice'=>$total
+        ]);
+
+        return redirect("invoices");
     }
 
     /**
@@ -163,6 +253,10 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         //
+        Invoice::where('no_invoice',$id)->update(['active'=>0]);
+        Invoice::where('no_invoice',$id)->delete();
+
+        return redirect('invoices');
     }
 
     public function cetak(Request $request,$id){

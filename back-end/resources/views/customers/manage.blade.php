@@ -44,7 +44,7 @@
                             Ubah
                         </button>
                     </a>
-                    <form action="{{url("customers/$customer->id")}}" method="POST">
+                    <form action="{{url("customer/$customer->id")}}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="badge text-bg-primary" onclick="return confirm('Yakin ingin hapus ?')">Hapus</button>
